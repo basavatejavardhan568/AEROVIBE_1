@@ -1,15 +1,33 @@
 # VAYU-GRID EV Power Station
 
-A standalone web experience for the VAYU-GRID traffic, air, energy, and EV power-station concept.
+An interactive concept site exploring highway-traffic wake capture, clustered roadside power, and micro-mobility charging. The original single-file export is retained at `reference/standalone-export.html` for comparison; the maintained application lives in `src/`.
 
-## Preview
+## Requirements
 
-Open `index.html` in a modern web browser. The page is self-contained and does not require a build step or package installation.
+- Node.js 20 or newer
+- npm
 
-## Publish with GitHub Pages
+## Run locally
 
-1. Open the repository's **Settings** on GitHub.
-2. Under **Pages**, choose **Deploy from a branch**.
-3. Select the `main` branch and the `/ (root)` folder, then save.
+```sh
+npm install
+npm run dev
+```
 
-GitHub Pages will serve the site from `index.html` at the repository root.
+Vite prints the local URL. Run the simulator and cluster-calculator regression tests with `npm test`; create a production build with `npm run build`, then inspect it using `npm run preview`.
+
+## Project layout
+
+- `src/App.jsx` owns live simulation state and interval cleanup.
+- `src/components/` contains the page sections and interactive controls.
+- `src/data/site.js` holds vehicle, traffic, stage, and default simulator data.
+- `src/lib/simulator.js` contains the traffic and energy-demo calculations.
+- `src/lib/cluster.js` contains the daily cluster-yield calculator.
+- `src/lib/*.test.js` tests those calculations using Node's built-in test runner.
+- `reference/standalone-export.html` is the original bundled export, kept as a reference.
+
+The simulator intentionally preserves the original demo's accelerated timing and scaling factors. Values are illustrative estimates, not field measurements or a validated engineering forecast.
+
+## GitHub Pages
+
+The workflow in `.github/workflows/deploy.yml` builds and publishes `dist/` on pushes to `main`. In the repository's **Settings → Pages**, set the deployment source to **GitHub Actions**. Subsequent pushes to `main` deploy automatically.
